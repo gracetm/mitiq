@@ -17,6 +17,16 @@ from typing import Callable
 
 from mitiq import Bitstring, MeasurementResult
 
+import logging
+from logging.handlers import RotatingFileHandler
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
+handler = RotatingFileHandler('mitiq.log', maxBytes=1000000, backupCount=1)
+handler.setLevel(logging.INFO)
+handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s'))
+logger = logging.getLogger('mitiq.rem.post_select')
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
 
 def post_select(
     result: MeasurementResult,
@@ -39,6 +49,16 @@ def post_select(
         inverted: Invert the selector predicate so that bitstrings which obey
             ``selector(bitstring) == False`` are selected and returned.
     """
-    return MeasurementResult(
+    # set up logging
+    logger.info(f'post_select called with: \n')
+    logger.info(f'   result = {result}\n')
+    logger.info(f'   selector = {selector}\n')
+    logger.info(f'   inverted = {inverted}\n')
+
+    results = MeasurementResult(
         [bits for bits in result.result if selector(bits) != inverted]
     )
+
+    logger.info(f'post_select returning {results}\n\n')
+
+    return results
