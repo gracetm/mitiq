@@ -30,13 +30,15 @@ from mitiq.rem.inverse_confusion_matrix import mitigate_measurements
 import logging
 from logging.handlers import RotatingFileHandler
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
-handler = RotatingFileHandler('mitiq.log', maxBytes=1000000, backupCount=1)
+import logging.config
+import time
+
+logging.config.fileConfig('python.conf')
+logging.Formatter.converter = time.gmtime
+handler = RotatingFileHandler('mitiq.log', encoding='utf-8', maxBytes=1000000, backupCount=1)
 handler.setLevel(logging.INFO)
-handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s'))
-logger = logging.getLogger('mitiq.rem.inverse_confusion_matrix')
+logger = logging.getLogger('mitiq.rem')
 logger.addHandler(handler)
-logger.setLevel(logging.INFO)
 
 def execute_with_rem(
     circuit: QPROGRAM,
@@ -59,11 +61,11 @@ def execute_with_rem(
         The expectation value estimated with REM.
     """
     # set up logging
-    logger.info(f'execute_with_rem called with: \n')
-    logger.info(f'   circuit = {circuit}\n')
-    logger.info(f'   executor = {executor}\n')
-    logger.info(f'   observable = {observable}\n')
-    logger.info(f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
+    logger.info(f'execute_with_rem called with: \n'
+                f'   circuit = {circuit}\n'
+                f'   executor = {executor}\n'
+                f'   observable = {observable}\n'
+                f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
 
     if not isinstance(executor, Executor):
         executor_obj = Executor(executor)
@@ -99,9 +101,9 @@ def mitigate_executor(
         The error-mitigated version of the input executor.
     """
     # set up logging
-    logger.info(f'mitigate_executor called with: \n')
-    logger.info(f'   executor = {executor}\n')
-    logger.info(f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
+    logger.info(f'mitigate_executor called with: \n'
+                f'   executor = {executor}\n' 
+                f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
 
     # We always mitigate an Executor object but, to preserve the input type,
     # we eventually return a callable if the input executor is a callable.
@@ -165,8 +167,8 @@ def rem_decorator(
         The error-mitigating decorator to be applied to an executor function.
     """
     # set up logging
-    logger.info(f'rem_decorator called with: \n')
-    logger.info(f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
+    logger.info(f'rem_decorator called with: \n'
+                f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
 
     # NOTE: most decorators check for whether the decorator has been used
     #   without parenthesis, but that is not possible with this decorator

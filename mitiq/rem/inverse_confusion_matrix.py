@@ -24,13 +24,15 @@ from mitiq import MeasurementResult, Bitstring
 import logging
 from logging.handlers import RotatingFileHandler
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
+import logging.config
+import time
+
+logging.config.fileConfig('python.conf')
+logging.Formatter.converter = time.gmtime
 handler = RotatingFileHandler('mitiq.log', maxBytes=1000000, backupCount=1)
 handler.setLevel(logging.INFO)
-handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s'))
 logger = logging.getLogger('mitiq.rem.inverse_confusion_matrix')
 logger.addHandler(handler)
-logger.setLevel(logging.INFO)
 
 
 def sample_probability_vector(
@@ -46,8 +48,8 @@ def sample_probability_vector(
         A list of sampled bitstrings.
     """
     # set up logging
-    logger.info(f'sample_probability_vector called with: \n')
-    logger.info(f'   probability_vector = {probability_vector}\n')
+    logger.info(f'sample_probability_vector called with: \n'
+                f'   probability_vector = {probability_vector}\n')
 
     # sample using the probability distribution given
     num_values = len(probability_vector)
@@ -86,8 +88,8 @@ def bitstrings_to_probability_vector(
         A probabiity vector corresponding to the measured bitstrings.
     """
     # set up loggers
-    logger.info(f'bitstrings_to_probability_vector called with: \n')
-    logger.info(f'   bitstrings = {bitstrings}\n')
+    logger.info(f'bitstrings_to_probability_vector called with: \n'
+                f'   bitstrings = {bitstrings}\n')
 
     pv = np.zeros(2 ** len(bitstrings[0]))
     for bs in bitstrings:
@@ -118,10 +120,10 @@ def generate_inverse_confusion_matrix(
         The inverse confusion matrix.
     """
     # set up loggers
-    logger.info(f'generate_inverse_confusion_matrix called with: \n')
-    logger.info(f'   num_qubits = {num_qubits}\n')
-    logger.info(f'   p0 = {p0}\n')
-    logger.info(f'   p1 = {p1}\n')
+    logger.info(f'generate_inverse_confusion_matrix called with: \n'
+                f'   num_qubits = {num_qubits}\n'
+                f'   p0 = {p0}\n'
+                f'   p1 = {p1}\n')
 
     # Use a smaller single qubit confusion matrix for generating
     # the larger inverse confusion matrix (by tensoring).
@@ -152,9 +154,9 @@ def generate_tensored_inverse_confusion_matrix(
         The inverse confusion matrix.
     """
     # set up loggers
-    logger.info(f'generate_tensored_inverse_confusion_matrix called with: \n')
-    logger.info(f'   num_qubits = {num_qubits}\n')
-    logger.info(f'   confusion_matrices = {confusion_matrices}\n')
+    logger.info(f'generate_tensored_inverse_confusion_matrix called with: \n'
+                f'   num_qubits = {num_qubits}\n'
+                f'   confusion_matrices = {confusion_matrices}\n')
 
     inv_confusion_matrices = [np.linalg.pinv(cm) for cm in confusion_matrices]
     tensored_inv_cm = reduce(np.kron, inv_confusion_matrices)
@@ -185,8 +187,8 @@ def closest_positive_distribution(
         The closest probability distribution.
     """
     # set up loggers
-    logger.info(f'closest_positive_distribution called with: \n')
-    logger.info(f'   quasi_probabilities = {quasi_probabilities}\n')
+    logger.info(f'closest_positive_distribution called with: \n'
+                f'   quasi_probabilities = {quasi_probabilities}\n')
 
     quasi_probabilities = np.array(quasi_probabilities, dtype=np.float64)
     init_guess = quasi_probabilities.clip(min=0)
@@ -229,9 +231,9 @@ def mitigate_measurements(
         A mitigated MeasurementResult.
     """
     # set up loggers
-    logger.info(f'mitigate_measurements called with: \n')
-    logger.info(f'   noisy_results = {noisy_result}\n')
-    logger.info(f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
+    logger.info(f'mitigate_measurements called with: \n'
+                f'   noisy_results = {noisy_result}\n'
+                f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
 
     if not isinstance(noisy_result, MeasurementResult):
         raise TypeError("Result is not of type MeasurementResult.")

@@ -20,13 +20,15 @@ from mitiq import Bitstring, MeasurementResult
 import logging
 from logging.handlers import RotatingFileHandler
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s: %(message)s')
+import logging.config
+import time
+
+logging.config.fileConfig('python.conf')
+logging.Formatter.converter = time.gmtime
 handler = RotatingFileHandler('mitiq.log', maxBytes=1000000, backupCount=1)
 handler.setLevel(logging.INFO)
-handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(name)s: %(message)s'))
 logger = logging.getLogger('mitiq.rem.post_select')
 logger.addHandler(handler)
-logger.setLevel(logging.INFO)
 
 def post_select(
     result: MeasurementResult,
@@ -50,10 +52,10 @@ def post_select(
             ``selector(bitstring) == False`` are selected and returned.
     """
     # set up logging
-    logger.info(f'post_select called with: \n')
-    logger.info(f'   result = {result}\n')
-    logger.info(f'   selector = {selector}\n')
-    logger.info(f'   inverted = {inverted}\n')
+    logger.info(f'post_select called with: \n'
+                f'   result = {result}\n'
+                f'   selector = {selector}\n'
+                f'   inverted = {inverted}\n')
 
     results = MeasurementResult(
         [bits for bits in result.result if selector(bits) != inverted]
