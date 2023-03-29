@@ -60,16 +60,16 @@ def execute_with_rem(
     Returns:
         The expectation value estimated with REM.
     """
-    # set up logging
-    logger.info(f'execute_with_rem called with: \n'
-                f'   circuit = {circuit}\n'
-                f'   executor = {executor}\n'
-                f'   observable = {observable}\n'
-                f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
 
     if not isinstance(executor, Executor):
         executor_obj = Executor(executor)
 
+    # set up logging
+    logger.info(f'execute_with_rem called with: \n'
+                f'   circuit = {circuit}\n'
+                f'   observable = {observable}\n'
+                f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
+    
     executor_with_rem = mitigate_executor(
         executor_obj, inverse_confusion_matrix=inverse_confusion_matrix
     )
@@ -100,10 +100,6 @@ def mitigate_executor(
     Returns:
         The error-mitigated version of the input executor.
     """
-    # set up logging
-    logger.info(f'mitigate_executor called with: \n'
-                f'   executor = {executor}\n' 
-                f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
 
     # We always mitigate an Executor object but, to preserve the input type,
     # we eventually return a callable if the input executor is a callable.
@@ -131,7 +127,9 @@ def mitigate_executor(
         @wraps(executor)
         def new_executor(circuit: QPROGRAM) -> MeasurementResult:
             result = cast(MeasurementResult, executor_obj.run([circuit])[0])
+            logger.info(f'test: {executor_obj.run([circuit])[0]}\n')
             return result
+        
 
     elif executor_obj.can_batch:
 
@@ -140,9 +138,9 @@ def mitigate_executor(
             circuits: List[QPROGRAM],
         ) -> Sequence[MeasurementResult]:
             results = executor_obj.run(circuits)
+            logger.info(f'test: {results}\n')
             return cast(Sequence[MeasurementResult], results)
 
-    logger.info(f'mitigate_executor returning {new_executor}\n\n')
     return new_executor
 
 

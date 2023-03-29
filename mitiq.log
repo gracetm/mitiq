@@ -57,3 +57,117 @@ mitigate_executor returning <mitiq.executor.executor.Executor object at 0x000002
 execute_with_rem returning (-1.96875+0j)
 
 
+execute_with_rem called with: 
+   circuit = 0: ───X───
+
+1: ───X───
+   executor = []
+   observable = Z(q(0)) + Z(q(1))
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+mitigate_executor called with: 
+   executor = []
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+mitigate_executor returning <mitiq.executor.executor.Executor object at 0x000002E4FC97B710>
+
+
+execute_with_rem returning (-2+0j)
+
+
+execute_with_rem called with: 
+   circuit = 0: ───X───
+
+1: ───X───
+   executor_quant results = []
+   executor_circuit = []
+   executor_can batch = False
+   observable = Z(q(0)) + Z(q(1))
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+mitigate_executor called with: 
+   executor_quant results = []
+   executor_circuit = []
+   executor_can batch = False
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+mitigate_executor returning <mitiq.executor.executor.Executor object at 0x0000024AC7AF73D0>
+
+
+execute_with_rem returning (-1.9091796875+0j)
+
+
+execute_with_rem called with: 
+   circuit = 0: ───X───
+
+1: ───X───
+   executor_quant results = []
+   executor_circuit = []
+   executor_can batch = False
+   observable = Z(q(0)) + Z(q(1))
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+mitigate_executor called with: 
+   executor_quant results = []
+   executor_circuit = []
+   executor_can batch = False
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+mitigate_executor returning: 
+   executor_quant results = []
+   executor_circuit = []
+   executor_can batch = False
+
+execute_with_rem returning (-1.979248046875+0j)
+
+
+execute_with_rem called with: 
+   circuit = 0: ───X───
+
+1: ───X───
+   observable = Z(q(0)) + Z(q(1))
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+mitigate_executor called with: 
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+execute_with_rem returning (-2+0j)
+
+
+execute_with_rem called with: 
+   circuit = 0: ───X───
+
+1: ───X───
+   observable = Z(q(0)) + Z(q(1))
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+execute_with_rem returning (-1.99560546875+0j)
+
+
