@@ -23,13 +23,12 @@ from mitiq import MeasurementResult, Bitstring
 
 import logging
 from logging.handlers import RotatingFileHandler
-
 import logging.config
 import time
 
 logging.config.fileConfig('python.conf')
 logging.Formatter.converter = time.gmtime
-handler = RotatingFileHandler('mitiq.log', maxBytes=1000000, backupCount=1)
+handler = RotatingFileHandler('mitiq.log', encoding='utf-8', maxBytes=1000000, backupCount=1)
 handler.setLevel(logging.INFO)
 logger = logging.getLogger('mitiq.rem.inverse_confusion_matrix')
 logger.addHandler(handler)
@@ -48,7 +47,7 @@ def sample_probability_vector(
         A list of sampled bitstrings.
     """
     # set up logging
-    logger.info(f'sample_probability_vector called with: \n'
+    logger.info(f'\nsample_probability_vector called with: \n'
                 f'   probability_vector = {probability_vector}\n')
 
     # sample using the probability distribution given
@@ -69,7 +68,7 @@ def sample_probability_vector(
         .tolist()
     )
 
-    logger.info(f'sample_probability_vector returning {bitstrings}\n\n')
+    logger.info(f'\nsample_probability_vector returning {bitstrings}\n\n')
 
     return bitstrings
 
@@ -88,7 +87,7 @@ def bitstrings_to_probability_vector(
         A probabiity vector corresponding to the measured bitstrings.
     """
     # set up loggers
-    logger.info(f'bitstrings_to_probability_vector called with: \n'
+    logger.info(f'\nbitstrings_to_probability_vector called with: \n'
                 f'   bitstrings = {bitstrings}\n')
 
     pv = np.zeros(2 ** len(bitstrings[0]))
@@ -97,7 +96,7 @@ def bitstrings_to_probability_vector(
         pv[index] += 1
     pv /= len(bitstrings)
 
-    logger.info(f'bitstrings_to_probability_vector returning {pv}\n\n')
+    logger.info(f'\nbitstrings_to_probability_vector returning {pv}\n\n')
     return pv
 
 
@@ -120,7 +119,7 @@ def generate_inverse_confusion_matrix(
         The inverse confusion matrix.
     """
     # set up loggers
-    logger.info(f'generate_inverse_confusion_matrix called with: \n'
+    logger.info(f'\ngenerate_inverse_confusion_matrix called with: \n'
                 f'   num_qubits = {num_qubits}\n'
                 f'   p0 = {p0}\n'
                 f'   p1 = {p1}\n')
@@ -132,7 +131,7 @@ def generate_inverse_confusion_matrix(
     inv_cm = np.linalg.pinv(cm)
 
     tensored_inv_cm = reduce(np.kron, [inv_cm] * num_qubits)
-    logger.info(f'generate_inverse_confusion_matrix returning {tensored_inv_cm}\n\n')
+    logger.info(f'\ngenerate_inverse_confusion_matrix returning {tensored_inv_cm}\n\n')
     return tensored_inv_cm
 
 
@@ -154,7 +153,7 @@ def generate_tensored_inverse_confusion_matrix(
         The inverse confusion matrix.
     """
     # set up loggers
-    logger.info(f'generate_tensored_inverse_confusion_matrix called with: \n'
+    logger.info(f'\ngenerate_tensored_inverse_confusion_matrix called with: \n'
                 f'   num_qubits = {num_qubits}\n'
                 f'   confusion_matrices = {confusion_matrices}\n')
 
@@ -169,7 +168,7 @@ def generate_tensored_inverse_confusion_matrix(
             f"{tensored_inv_cm.shape} should be {expected_shape}."
         )
 
-    logger.info(f'generate_tensored_inverse_confusion_matrix returning {tensored_inv_cm}\n\n')
+    logger.info(f'\ngenerate_tensored_inverse_confusion_matrix returning {tensored_inv_cm}\n\n')
     return tensored_inv_cm
 
 
@@ -187,7 +186,7 @@ def closest_positive_distribution(
         The closest probability distribution.
     """
     # set up loggers
-    logger.info(f'closest_positive_distribution called with: \n'
+    logger.info(f'\nclosest_positive_distribution called with: \n'
                 f'   quasi_probabilities = {quasi_probabilities}\n')
 
     quasi_probabilities = np.array(quasi_probabilities, dtype=np.float64)
@@ -211,7 +210,7 @@ def closest_positive_distribution(
             "REM failed to determine the closest positive distribution."
         )
     
-    logger.info(f'closest_positive_distribution returning {result.x}\n\n')
+    logger.info(f'\nclosest_positive_distribution returning {result.x}\n\n')
     return result.x
 
 
@@ -231,7 +230,7 @@ def mitigate_measurements(
         A mitigated MeasurementResult.
     """
     # set up loggers
-    logger.info(f'mitigate_measurements called with: \n'
+    logger.info(f'\nmitigate_measurements called with: \n'
                 f'   noisy_results = {noisy_result}\n'
                 f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
 
@@ -254,5 +253,5 @@ def mitigate_measurements(
     )
     result = MeasurementResult(adjusted_bitstrings, noisy_result.qubit_indices)
 
-    logger.info(f'mitigate_measurements returning {result}\n\n')
+    logger.info(f'\nmitigate_measurements returning {result}\n\n')
     return result

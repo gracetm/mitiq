@@ -29,10 +29,10 @@ from mitiq.rem.inverse_confusion_matrix import mitigate_measurements
 
 import logging
 from logging.handlers import RotatingFileHandler
-
 import logging.config
 import time
 
+# importing the required logging libraries
 logging.config.fileConfig('python.conf')
 logging.Formatter.converter = time.gmtime
 handler = RotatingFileHandler('mitiq.log', encoding='utf-8', maxBytes=1000000, backupCount=1)
@@ -65,7 +65,7 @@ def execute_with_rem(
         executor_obj = Executor(executor)
 
     # set up logging
-    logger.info(f'execute_with_rem called with: \n'
+    logger.info(f'\nexecute_with_rem called with: \n'
                 f'   circuit = {circuit}\n'
                 f'   observable = {observable}\n'
                 f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
@@ -77,7 +77,7 @@ def execute_with_rem(
     executor_with_rem = cast(Executor, executor_with_rem)
 
     result = executor_with_rem.evaluate(circuit, observable)[0]
-    logger.info(f'execute_with_rem returning {result}\n\n')
+    logger.info(f'\nexecute_with_rem returning {result}\n\n')
     return result
 
 
@@ -165,7 +165,7 @@ def rem_decorator(
         The error-mitigating decorator to be applied to an executor function.
     """
     # set up logging
-    logger.info(f'rem_decorator called with: \n'
+    logger.info(f'\nrem_decorator called with: \n'
                 f'   inverse_confusion_matrix = {inverse_confusion_matrix}\n')
 
     # NOTE: most decorators check for whether the decorator has been used
@@ -184,5 +184,5 @@ def rem_decorator(
             mitigated_executor,
         )
 
-    logger.info(f'rem_decorator returning {decorator}\n\n')
+    logger.info(f'\nrem_decorator returning {decorator}\n\n')
     return decorator

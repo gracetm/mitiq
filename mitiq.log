@@ -171,3 +171,48 @@ execute_with_rem called with:
 execute_with_rem returning (-1.99560546875+0j)
 
 
+
+execute_with_rem called with: 
+   circuit = 0: ───X───
+
+1: ───X───
+   observable = Z(q(0)) + Z(q(1))
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+
+execute_with_rem returning (-1.980224609375+0j)
+
+
+
+execute_with_rem called with: 
+   circuit = 0: ───X───
+
+1: ───X───
+   observable = Z(q(0)) + Z(q(1))
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+
+execute_with_rem returning (-1.96337890625+0j)
+
+
+
+execute_with_rem called with: 
+   circuit = 0: ───X───
+
+1: ───X───
+   observable = Z(q(0)) + Z(q(1))
+   inverse_confusion_matrix = [[ 2.25 -0.75 -0.75  0.25]
+ [-0.75  2.25  0.25 -0.75]
+ [-0.75  0.25  2.25 -0.75]
+ [ 0.25 -0.75 -0.75  2.25]]
+
+
+execute_with_rem returning (-2+0j)
+
+
